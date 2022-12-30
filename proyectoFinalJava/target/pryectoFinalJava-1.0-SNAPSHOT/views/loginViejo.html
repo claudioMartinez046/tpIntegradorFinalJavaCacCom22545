@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <title>TP integrador obligatorio</title>
+</head>
+
+<body style="background-image: url(../img/ba3.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            ">
+    <header>
+        <div class="flex-container">
+            <div class="logo">
+                <img src="../img/codoacodo.png" class="cac" alt="imgCac">
+                Conf Bs As
+            </div>
+            <nav class="a-la-derecha">
+                <a href="../index.html">La Conferencia</a>
+                <a href="../index.html#oradores">Los Oradores</a>
+                <a href="">El lugar y la fecha</a>
+                <a href="../index.html#conviertete">Conviertete en orador</a>
+                <a id="buy-green" href="login.html">Comprar tickets</a>
+            </nav>
+        </div>
+    </header>
+ 
+    <main>
+        <div class="container d-flex justify-content-center align-items-center">
+            <form method="POST" action="/usuario/loginUser" class="py-4 px-5 rounded form-color text-secondary" >
+                <h2 class="mb-4 text-center">Login</h2>
+                <div class="row mb-3">
+                    <label for="username" class="col-4 formlabel">Usuario:</label>
+                    <input type="text" id="username" name="username" class="col-8 formcontrol">
+                </div>
+        
+                <div class="row mb-3">
+                    <label for="password" class="col-4 formlabel">Clave:</label>
+                    <input type="password" id="password" name="password" class="col-8 formcontrol">
+                </div>
+        
+                <div class="mb-3 form-check">
+                    <input type="checkbox" id="exampleCheck1" class="form-check-input">
+                    <label for="exampleCheck1" class="form-check-label">Recordarme</label>
+                </div>
+        
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <button class="btn btn-dark" type="submit">Ingresar</button>
+                    </div>
+                    <div class="col-auto">
+                        <a href="/views/registro.jsp" class="link-primary">Registrarme</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+       <div>
+        <p>lolololo</p>
+       </div>
+</main>
+    <!-- footer -->
+    <footer>
+        <div class="grid-container">
+            <div><a href="">Preguntas <br> Frecuentes</a></div>
+            <div><a href="">Contáctanos</a></div>
+            <div><a href="">Prensa</a></div>
+            <div><a href="">Conferencias</a></div>
+            <div><a href="">Términos y <br> condiciones</a></div>
+            <div><a href="">Privacidad</a></div>
+            <div><a href="">Estudiantes</a></div>
+        </div>
+    </footer>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
