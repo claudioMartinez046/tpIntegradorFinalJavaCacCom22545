@@ -4,8 +4,12 @@
  */
 package controller;
 
+import database.UsuarioDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,13 +35,13 @@ public class UsuarioController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-           
-            String action = request.getPathInfo();
-            //UsuarioDAO udao = new UsuarioDAO();
+
+            String action = request.getPathInfo(); // peticiones del front
+            UsuarioDAO udao = new UsuarioDAO(); //interacion con la DB
             HttpSession session = request.getSession();
             Usuario actualUser;
             String username;
@@ -46,14 +50,67 @@ public class UsuarioController extends HttpServlet {
             String last_name;
             String email;
             int regs_afectados;
-            
+
             switch (action) {
                 case "/loginUser":
-                    username = request.getParameter("username");
+                    username = request.getParameter("username");//lo lee de name del input del html login
                     password = request.getParameter("password");
-                    //verificar si existe usuario y pass
-                    
+                    //verificar si existe usuario y pass con los datos obtenidos de los inputs del form
+                    boolean existeUsuario = udao.login(username, password);
+                    session.setAttribute("isLogin", existeUsuario);//del resultado del metodo de login(false/true) carga a isLogin
+                    session.setAttribute("actualUsername", username);//carga el nombre de usuario a actualusername,sirve para mostrar en alguna parte del navegador
+                    response.sendRedirect("/proyectoFinalJava/views/user.jsp");
                     break;
+
+                case "/logoutUser":
+                    session.setAttribute("isLogin", false);
+                    session.setAttribute("actualUsername", "");
+                    response.sendRedirect("/proyectoFinalJava/");
+                    break;
+
+                case "/createUser":
+                    //verifica que no exista usuario
+                    username = request.getParameter("username");
+                    if (udao.getUserByUsername(username) == null) {
+                        //al ser true devuelve un obejeto usuario completo
+                        //lo cual va capturando los datos en las sig. variables
+                        password = request.getParameter("password");
+                        name = request.getParameter("name");
+                        last_name = request.getParameter("last_name");
+                        email = request.getParameter("email");
+                        //aca los persiste en la DB
+                        actualUser = new Usuario(username, password, name, last_name, email);
+                        regs_afectados = udao.createUser(actualUser);
+                    } else {
+                        //mejorar y coloar algun alert o redireccion de "existe usuario"
+                        regs_afectados = 2;
+                    }
+
+                    session.setAttribute("uCreado", regs_afectados);
+                    response.sendRedirect("/proyectoFinalJava/views/userCreado.jsp");
+                    break;
+                    
+                    case "/viewUser":
+                        //obtengo el username y se lo paso al metodo para obtener un obg.usuario completo
+                    username = (String) session.getAttribute("actualUsername");
+                    actualUser = udao.getUserByUsername(username);
+                    
+                    //una vez obtenido el ob usuario cargo el atributo de la seccion con un usuario con todos los datos completos
+                    session.setAttribute("actualUser", actualUser);
+                    response.sendRedirect("/proyectoFinalJava/views/edicion.jsp");
+                    break;
+                    
+                    case "/deleteUser":
+                    username = (String) session.getAttribute("actualUsername");
+                    
+                    //if(udao.getBorrable(username)){
+                        regs_afectados = udao.deleteUser(username);
+                        session.setAttribute("isLogin", false);
+                        session.setAttribute("actualUsername", "");
+                    //}
+                    response.sendRedirect("/proyectoFinalJava/views/login.jsp");
+                    break;
+
                 default:
                     throw new AssertionError();
             }
@@ -72,7 +129,11 @@ public class UsuarioController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -86,7 +147,11 @@ public class UsuarioController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

@@ -33,7 +33,7 @@
         <div class="flex-container">
             <div class="logo">
                 <a href="/proyectoFinalJava">
-                   <img src="/pryectoFinalJava/img/codoacodo.png" class="cac" alt="imgCac"> 
+                   <img src="/proyectoFinalJava/img/codoacodo.png" class="cac" alt="imgCac"> 
                 </a>
                 Conf Bs As
             </div>
@@ -43,8 +43,8 @@
                 <a href="">El lugar y la fecha</a>
                 <a href="#conviertete">Conviertete en orador</a>
                 <a id="buy-green" href="/proyectoFinalJava/views/login.jsp" style="display: <%= isLogin?"none":"initial" %>">Comprar tickets</a>
-                <a href="" style="display: <%= !isLogin?"none":"initial" %>">Mi Cuenta</a>
-                <a href="" style="display: <%= !isLogin?"none":"initial" %>">Salir</a>
+                <a href="/proyectoFinalJava/usuario/viewUser" style="display: <%= !isLogin?"none":"initial" %>">Mi Cuenta</a>
+                <a href="/proyectoFinalJava/usuario/logoutUser" style="display: <%= !isLogin?"none":"initial" %>">Salir</a>
             </nav>
         </div>
     </header>

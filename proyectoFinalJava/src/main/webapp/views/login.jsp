@@ -15,7 +15,8 @@
             "> <!--<!-- cambiar a CSS -->
     
     <div class="container d-flex justify-content-center align-items-center">
-        <form method="POST" action="/usuario/loginUser" class="py-4 px-5 rounded form-color text-secondary" >
+                                    <!--ruta "usuario" sale de UsuarioController y "loginUser" son acciones que se ejecutan dentro de la misma clase-->
+        <form method="POST" action="/proyectoFinalJava/usuario/loginUser" class="py-4 px-5 rounded form-color text-secondary" >
             <h2 class="mb-4 text-center">Login</h2>
             <div class="row mb-3">
                 <label for="username" class="col-4 formlabel">Usuario:</label>
