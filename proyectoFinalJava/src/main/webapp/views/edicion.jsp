@@ -8,12 +8,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/views/partials/header.jsp" %>
 
-<%
-    //verifica que haya un usuario logueado SI o SI,sino devuelve a inicio o login
-    if (!(boolean)session.getAttribute("isLogin")){
+<%    //verifica que haya un usuario logueado SI o SI,sino devuelve a inicio o login
+    if (!(boolean) session.getAttribute("isLogin")) {
         response.sendRedirect("/proyectoFinalJava/views/login.jsp");
     }
-                        //al traer un obgeto siempre castearlo para el tipo que yo necesito usarlo
+    //al traer un obgeto siempre castearlo para el tipo que yo necesito usarlo
     Usuario actualUser = (Usuario) session.getAttribute("actualUser");
     String username = actualUser.getUsername();
     String password = actualUser.getPassword();
@@ -21,11 +20,19 @@
     String last_name = actualUser.getLast_name();
     String email = actualUser.getEmail();
     
+    
+
 %>
 <main class="container d-flex justify-content-center align-items-center">
 
     <form method="POST" action="/proyectoFinalJava/usuario/updateUser" class="w-50 px-5 py-4 rounded" >
         <h2 class="mb-4 text-center">Mi cuenta</h2>
+        <% int regsMod = (int) session.getAttribute("regsMod");
+               regsMod = 0;
+        %>
+        
+
+
         <div class="row mb-3">
             <label for="username" class="col-4 formlabel">Usuario:</label>                  <!<!-- carga el valor atravez del Scriptlet  -->
             <input type="text" id="username" name="username" class="col-8 formcontrol" value="<%= username%>" disabled>
@@ -50,7 +57,7 @@
             <label for="email" class="col-4 formlabel">Email:</label>
             <input type="email" id="email" name="email" class="col-8 formcontrol" value="<%= email%>" >
         </div>
-        
+
         <div class="row align-items-center justify-content-between">
             <div class="col-auto">
                 <button class="btn btn-dark" type="submit">Modificar</button>

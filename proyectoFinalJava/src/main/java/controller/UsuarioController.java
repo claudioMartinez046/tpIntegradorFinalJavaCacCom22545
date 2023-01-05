@@ -89,26 +89,43 @@ public class UsuarioController extends HttpServlet {
                     session.setAttribute("uCreado", regs_afectados);
                     response.sendRedirect("/proyectoFinalJava/views/userCreado.jsp");
                     break;
-                    
-                    case "/viewUser":
-                        //obtengo el username y se lo paso al metodo para obtener un obg.usuario completo
+
+                case "/viewUser":
+                    //obtengo el username y se lo paso al metodo para obtener un obg.usuario completo
                     username = (String) session.getAttribute("actualUsername");
                     actualUser = udao.getUserByUsername(username);
-                    
+
                     //una vez obtenido el ob usuario cargo el atributo de la seccion con un usuario con todos los datos completos
                     session.setAttribute("actualUser", actualUser);
                     response.sendRedirect("/proyectoFinalJava/views/edicion.jsp");
                     break;
-                    
-                    case "/deleteUser":
+
+                case "/deleteUser":
                     username = (String) session.getAttribute("actualUsername");
-                    
+
                     //if(udao.getBorrable(username)){
-                        regs_afectados = udao.deleteUser(username);
-                        session.setAttribute("isLogin", false);
-                        session.setAttribute("actualUsername", "");
+                    regs_afectados = udao.deleteUser(username);
+                    session.setAttribute("isLogin", false);
+                    session.setAttribute("actualUsername", "");
                     //}
                     response.sendRedirect("/proyectoFinalJava/views/login.jsp");
+                    break;
+
+                case "/updateUser":
+                    //el username lo leo de la seccion para mas seguridad
+                    username = (String) session.getAttribute("actualUsername");
+                    //leo los datos ACTUALIZADO del formulario de edicion
+                    password = request.getParameter("password");
+                    name = request.getParameter("name");
+                    last_name = request.getParameter("last_name");
+                    email = request.getParameter("email");
+                    actualUser = new Usuario(username, password, name, last_name, email);
+                    regs_afectados = udao.updateUser(actualUser);
+                     // actualizo el objeto usuario guardado en la seccion   
+                    session.setAttribute("actualUser", actualUser);
+                    session.setAttribute("regsMod", regs_afectados);
+                    response.sendRedirect("/proyectoFinalJava/views/edicion.jsp");
+
                     break;
 
                 default:
